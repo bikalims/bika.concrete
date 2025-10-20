@@ -134,9 +134,15 @@
               <col style="width:52%"/>
             </colgroup>
             <tr>
-              <td class="label" i18n:translate=""><h2><strong>Sample ID</strong></h2></td>
-              <td class="field">
-                  <h2 tal:content="model/getId|nothing"/>
+              <td class="label" i18n:translate="">
+                <h2>
+                   <strong>
+                      <span tal:content="model/MixMaterial/material_type/title|nothing"/>
+                      <tal:spec condition="spec">x
+                        <span>(</span><span tal:content="spec/title|nothing"/><span>)</span>
+                      </tal:spec>
+                   </strong>
+                </h2>
               </td>
             </tr>
           </table>
@@ -172,22 +178,21 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="label" i18n:translate="">Manufacturer</td>
+                  <td class="label" i18n:translate="">Sample Name</td>
                   <td class="field">
-                      <div tal:content="model/MixMaterial/manufacturer/title|nothing"/>
+                      <div tal:content="model/SampleName|nothing"/>
                   </td>
                 </tr>
                 <tr>
-                  <td class="label" i18n:translate="">Material</td>
+                  <td class="label" i18n:translate="">Description</td>
                   <td class="field">
-                      <div tal:content="model/MixMaterial/title|nothing"/>
+                      <div tal:content="model/SampleDescription|nothing"/>
                   </td>
                 </tr>
                 <tr>
-                  <td class="label" i18n:translate="">Type/Class</td>
+                  <td class="label" i18n:translate="">Analyst</td>
                   <td class="field">
-                      <span tal:content="model/MixMaterial/material_type/title|nothing"/>/
-                      <span tal:content="model/MixMaterial/material_type/material_class/title|nothing"/>
+                      <span tal:content="python:view.get_analysts(model)[0]['analyst']"/>
                   </td>
                 </tr>
               </table>
@@ -206,117 +211,33 @@
               <table class="table table-sm table-condensed">
                 <!-- Client Name(s) -->
                 <tr>
-                  <td class="label" i18n:translate="">Lot Number</td>
-                  <td class="field" tal:content="model/LotNumber|nothing">
+                  <td class="label" i18n:translate="">Sample ID</td>
+                  <td class="field" tal:content="model/getId|nothing">
                   </td>
                 </tr>
                 <!-- Contact Name(s) -->
                 <tr>
-                  <td class="label" i18n:translate="">Date Range</td>
+                  <td class="label" i18n:translate="">Date Sampled</td>
+                  <td class="field">
+                      <span tal:content="python:view.to_custom_date(model.DateSampled)"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label" i18n:translate="">Date Received</td>
+                  <td class="field">
+                      <span tal:content="python:view.to_custom_date(model.DateReceived)"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label" i18n:translate="">Date Analysed</td>
                   <td class="field">
                       <span tal:content="python:view.get_date_analysed(model)[0] or ''"/>
                       -
                       <span tal:content="python:view.get_date_analysed(model)[0] or ''"/>
                   </td>
                 </tr>
-                <tr>
-                  <td class="label" i18n:translate="">Date Issued</td>
-                  <td class="field" tal:content="python:view.to_custom_date(model.DatePublished or view.timestamp)"></td>
-                </tr>
               </table>
           </td>
-          </tr>
-          <tr>
-              <td colspan="3" class="text-center">
-                <div class="text-center" style="background-color:red; color: white ">Certification</div>
-             </td>
-          </tr>
-          <tr>
-            <td colspan="3" class="text-center">
-                We certify this sample was tested in accordance with
-                <span tal:content="spec/title|nothing"/> specifications
-                for <span tal:content="model/MixMaterial/material_type/title|nothing"/>
-                <span tal:content="model/MixMaterial/title|nothing"/>.
-            </td>
-          </tr>
-          <tr>
-             <td colspan="3" class="text-center">
-                <div class="text-center" style="background-color:red; color: white;margin-top: 2px">General Information</div>
-             </td>
-          </tr>
-          <tr>
-            <td style="border:none;" class="align-top">
-              <!-- Left Table -->
-              <table class="table table-sm table-condensed">
-                <!-- Client Name(s) -->
-                <tr>
-                  <td class="label" i18n:translate="">Supplier</td>
-                  <td class="field">
-                      <div tal:content="model/Supplier/title|nothing"/>
-                  </td>
-                </tr>
-                <!-- Contact Name(s) -->
-                <tr>
-                  <td class="label" i18n:translate="">Address</td>
-                  <td class="field">
-                      <div tal:condition="model/Supplier">
-                          <span tal:content="python: view.get_millreport_supplier_address(model.Supplier)[0]"/>
-                      </div>
-                      <div tal:condition="model/Supplier">
-                        <span tal:content="python: view.get_millreport_supplier_address(model.Supplier)[1]"/>
-                      </div>
-                  </td>
-                </tr>
-                <!-- Physical Address -->
-                <tr>
-                  <td class="label" i18n:translate="">Contact</td>
-                  <td class="field">
-                      <div tal:content="model/SupplierContact/Fullname|nothing"/>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td style="border:none;" class="align-top pl-2">
-              <!-- Right Table -->
-              <table class="table table-sm table-condensed ml-1"
-                     tal:define="laboratory python:view.laboratory;">
-                <tr>
-                  <td>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td style="border:none;" class="align-top pl-2">
-              <table class="table table-sm table-condensed">
-                <!-- Client Name(s) -->
-                <tr>
-                  <td class="label" i18n:translate="">Source Location</td>
-                  <td class="field">
-                      <div tal:content="model/SupplierLocation/supplier_location_title|nothing"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="label" i18n:translate=""></td>
-                  <td class="field">
-                  <tal:block tal:condition="python: model.SupplierLocation">
-                      <div>
-                          <span tal:content="python: view.get_millreport_address(model.SupplierLocation)[0]" />
-                      </div>
-                      <div>
-                          <span tal:content="python: view.get_millreport_address(model.SupplierLocation)[1]" />
-                      <div>
-                  </tal:block>
-                  </td>
-                </tr>
-                <!-- Physical Address -->
-                <tr>
-                  <td class="label" i18n:translate="">Contact</td>
-                  <td class="field">
-                      <div tal:content="model/SupplierLocation/supplier_location_contact/title|nothing"/>
-                  </td>
-                </tr>
-              </table>
-            </td>
           </tr>
         </table>
       </div>
@@ -355,13 +276,6 @@
        tal:define="col1 python:view.split_categories(model)[0];
                    col2 python:view.split_categories(model)[1];">
   <thead>
-      <tr>
-          <td colspan="8" class="text-center" style="background-color:#FF0000">
-            <div class="text-center" style="background-color:red; color: white">
-                <span tal:content="spec/title|nothing"/> Test Results
-            </div>
-          </td>
-      </tr>
     <tr>
       <th class="small">Analysis</th>
       <th class="small">Result</th>

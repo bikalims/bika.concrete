@@ -177,6 +177,9 @@ sample_name_field = ExtStringField(
 
 description_field = ExtTextField(
     "SampleDescription",
+    mode="rw",
+    write_permission=FieldEditBatch,
+    read_permission=View,
     widget=TextAreaWidget(
         label=_("Description"),
         description=_(""),

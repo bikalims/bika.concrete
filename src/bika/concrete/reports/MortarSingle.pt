@@ -102,17 +102,13 @@
           <!-- Header Left -->
           <h1>Material Certification Report</h1>
           <table class="table table-sm table-condensed">
-            <colgroup>
-              <col style="width:48%"/>
-              <col style="width:52%"/>
-            </colgroup>
             <tr>
               <td class="label" i18n:translate="">
                 <h2>
                    <strong>
                       <span tal:content="model/MixMaterial/material_type/title|nothing"/>
-                      <tal:spec condition="spec">x
-                        <span>(</span><span tal:content="spec/title|nothing"/><span>)</span>
+                      <tal:spec condition="spec">
+                        <span tal:content="string:(${spec/title|nothing})"/>
                       </tal:spec>
                    </strong>
                 </h2>
@@ -439,7 +435,7 @@
                 <td>
                   <div>
                     <img tal:condition="supervisor/getSignature|nothing"
-                         tal:attributes="src string:${supervisor/absolute_url}/Signature" style="height:30px"/>
+                         tal:attributes="src string:${supervisor/absolute_url}/Signature" style="height:100px"/>
                   </div>
                 </td>
                 <td></td>

@@ -147,15 +147,15 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="label" i18n:translate="">Sample Name</td>
+                  <td class="label" i18n:translate="">Material Title</td>
                   <td class="field">
-                      <div tal:content="model/SampleName|nothing"/>
+                      <div tal:content="model/MixMaterial/title|nothing"/>
                   </td>
                 </tr>
                 <tr>
                   <td class="label" i18n:translate="">Description</td>
                   <td class="field">
-                      <div tal:content="model/SampleDescription|nothing"/>
+                      <span tal:content="model/MixMaterial/description|nothing"/>
                   </td>
                 </tr>
                 <tr>

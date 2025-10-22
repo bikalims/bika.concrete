@@ -389,8 +389,52 @@
                       <span class="capture-date" tal:content="python:view.get_result_capture_date(analysis)"></span>
                     </td>
                     <td class="text-right">
-                      <span tal:condition="python: analysis.ResultOptionsType == 'timeseries'"
+                      <span tal:condition="python: analysis.ResultOptionsType == 'timeseries' and len(view.get_timeseries_visible_columns(model, analysis)) > 0"
                         class="result" >See Below</span>
+                      <span tal:condition="python: analysis.ResultOptionsType == 'timeseries' and len(view.get_timeseries_visible_columns(model, analysis)) == 0"
+                        class="result" >
+                        <div class="row"
+                             tal:define="columns python: analysis.TimeSeriesColumns;
+                                         columns_str python:view.json_dumps(columns);
+                                         graph_interpolation python: analysis.GraphInterpolation;
+                                         graph_title python: analysis.GraphTitle;
+                                         graph_xaxis python: analysis.GraphXAxisTitle;
+                                         graph_yaxis python: analysis.GraphYAxisTitle;
+                                         results python:view.json_loads(view.get_timeseries_result(model, analysis));
+                                         results_str python:view.json_dumps(results)">
+
+                          <div class="col-12">
+                            <table class="time-series-matrix table table-sm ">
+                              <thead>
+                                <tr>
+                                  <tal:head tal:repeat="col columns">
+                                    <th tal:content="python: col['ColumnTitle']"/>
+                                  </tal:head>
+                                </tr>
+                              <thead>
+                              <tbody>
+                                <tr tal:repeat="row results">
+                                  <tal:cell tal:repeat="cell row">
+                                    <tal:block tal:define="OOR python: cell['val'] and cell['OOR'] and repeat.cell.index > 0">
+                                      <td tal:condition="OOR" class="time-series-data time-series-oor">
+                                        <span tal:content="python: cell['val']"/>
+                                      </td>
+                                      <td tal:condition="python: not OOR" class="time-series-data">
+                                          <span tal:content="python: cell['val']"/>
+                                      </td>
+                                    </tal:block>
+                                  </tal:cell>
+                                </tr>
+                              </tbody>
+                            </table>
+
+                            <div class="time-series-graph"
+                              tal:attributes="data-columns columns_str; data-results results_str; data-graph_interpolation graph_interpolation; data-graph_title graph_title; data-graph_xaxis graph_xaxis; data-graph_yaxis graph_yaxis">
+                            </div>
+
+                          </div>
+                        </div>  
+                      <span>
                       <span tal:condition="python: analysis.ResultOptionsType != 'timeseries'"
                         class="result" tal:content="structure python:model.get_formatted_result(analysis)">23</span>
                     </td>
@@ -802,7 +846,7 @@
 
             <!--  TIMESERIES RESULTS -->
             <tal:render
-              define="analyses python:[analysis for analysis in view.get_analyses_by(model, poc=poc, category=category) if analysis.ResultOptionsType=='timeseries']"
+              define="analyses python:[analysis for analysis in view.get_analyses_by(model, poc=poc, category=category) if analysis.ResultOptionsType=='timeseries' and len(view.get_timeseries_visible_columns(model, analysis)) > 0]"
               condition="python:analyses">
                 <div class="section section-timeseries no-gutters">
                   <div class="">

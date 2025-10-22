@@ -437,7 +437,7 @@
          tal:define="ris python:model.get_resultsinterpretation();
                      has_ri python:any(map(lambda r: r.get('richtext'), ris));">
       <div class="" tal:condition="has_ri">
-        <h2 class="notes-header">Notes</h2>
+        <h1 i18n:translate="">Notes</h1>
         <tal:ri repeat="ri ris">
           <h2 tal:condition="ri/richtext|nothing" class="notes-header" tal:content="string:${ri/title}" ></h2>
           <div tal:content="structure ri/richtext|nothing"></div>
@@ -451,7 +451,7 @@
     <div class="row section-resultsinterpretation no-gutters"
          tal:define="methods python: view.get_sample_methods(model);">
       <div class="" tal:condition="methods">
-        <h2 class="notes-header">Applicable Test Methods</h2>
+        <h1 i18n:translate="">Applicable Test Methods</h1>
         <tal:method_info repeat="method methods">
             <div tal:content="structure method"></div>
         </tal:method_info>
@@ -877,7 +877,7 @@
   <tal:render condition="python:True">
       <div class="row section-remarks no-gutters" tal:condition="model/Remarks">
         <div class="">
-          <h2 i18n:translate>Remarks</h2>
+          <h1 i18n:translate="">Remarks</h1>
           <div class="text-info" tal:repeat="remark model/Remarks">
               <div class="text-info" tal:content="python: '{}, {}: {}'.format(remark['user_name'], remark['created'][:10], remark['content'])"></div>
           </div>
@@ -890,10 +890,10 @@
   <tal:render condition="python:True">
     <div class="row section-attachments no-gutters">
       <tal:attachment tal:define="attachments python:model.get_sorted_attachments('r');">
-        <h2 i18n:translate=""
+        <h1 i18n:translate=""
             tal:condition="attachments">
           Attachments for <span tal:replace="model/getId"/>
-        </h2>
+        </h1>
         <table class="table w-100" tal:condition="attachments">
           <colgroup tal:condition="python:len(attachments) > 1">
             <col tal:repeat="col python:range(attachments_per_row)"

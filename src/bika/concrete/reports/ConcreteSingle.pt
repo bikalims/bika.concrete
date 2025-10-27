@@ -284,6 +284,19 @@
     </div>
   </tal:render>
 
+  <!-- BATCH REMARKS -->
+  <tal:render condition="python:True"
+              define="batch model/Batch;
+                      coa_remarks batch/COARemarks;">
+
+    <div class="row section-info no-gutters no-borders" tal:condition="coa_remarks">
+      <h1 i18n:translate="">Scope of Work</h1>
+      <div tal:content="structure coa_remarks|nothing"></div>
+
+      <div class="clearfix"></div>
+    </div>
+  </tal:render>
+
   <!-- ALERTS -->
   <tal:render condition="python:True">
     <div class="row section-alerts no-gutters">

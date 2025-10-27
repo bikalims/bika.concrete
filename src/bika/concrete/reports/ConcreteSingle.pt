@@ -434,7 +434,7 @@
   <!--  RESULTS INTERPRETATION -->
   <tal:render condition="python:True">
     <div class="row section-resultsinterpretation no-gutters"
-         tal:define="ris python:model.get_resultsinterpretation();
+         tal:define="ris python:view.get_general_resultsintepretation(model);
                      has_ri python:any(map(lambda r: r.get('richtext'), ris));">
       <div class="" tal:condition="has_ri">
         <h1 i18n:translate="">Notes</h1>

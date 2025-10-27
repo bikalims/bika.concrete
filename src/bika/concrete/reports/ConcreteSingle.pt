@@ -295,6 +295,36 @@
 
       <div class="clearfix"></div>
     </div>
+    <!--  SIGNATURES -->
+    <tal:responsibles define="supervisor laboratory/getSupervisor">
+      <div class="row section-signatures no-gutters">
+          <table class="table table-sm table-condensed" style="width:50%">
+            <tr>
+                <td>
+                  <div class="font-weight-bold">
+                    <span tal:content="supervisor/getSalutation|nothing"></span>
+                    <span tal:condition="supervisor/getSalutation|nothing">&nbsp;</span>
+                    <span tal:content="supervisor/getFullname|nothing"></span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <span tal:content="supervisor/JobTitle|nothing"></span>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                  <div>
+                    <img tal:condition="supervisor/getSignature|nothing"
+                         tal:attributes="src string:${supervisor/absolute_url}/Signature" style="height:100px"/>
+                  </div>
+                </td>
+                <td></td>
+            </tr>
+          </table>
+      </div>
+    </tal:responsibles>
   </tal:render>
 
   <!-- ALERTS -->
@@ -938,58 +968,6 @@
       </tal:attachment>
     </div>
   </tal:render>
-
-  <!--  SIGNATURES -->
-  <tal:render condition="python:False">
-    <div class="row section-signatures no-gutters">
-      <div class="w-100">
-        <h1 i18n:translate="">Managers Responsible</h1>
-        <table class="table table-sm table-condensed">
-          <tr>
-            <tal:manager repeat="manager python:model.managers">
-              <td style="border:none">
-                <div>
-                  <img tal:condition="manager/getSignature"
-                       tal:attributes="src string:${manager/absolute_url}/Signature" style="height:75px"/>
-                </div>
-                <div class="font-weight-bold">
-                  <span tal:content="manager/getSalutation"></span>
-                  <span tal:condition="manager/getSalutation">&nbsp;</span>
-                  <span tal:content="manager/getFullname"></span>
-                </div>
-                <div>
-                  <span tal:content="manager/JobTitle"></span>
-                </div>
-                <div>
-                  <span tal:content="manager/DefaultDepartment/title|nothing"></span>
-                </div>
-                <div>
-                  <tal:email tal:condition="manager/EmailAddress|nothing"
-                             tal:define="email manager/EmailAddress|nothing">
-                    <a tal:content="email"
-                        tal:attributes="href string:mailto:${email}"></a>
-                  </tal:email>
-                </div>
-              </td>
-            </tal:manager>
-            <tal:reporter define="reporter python:view.current_user" condition="reporter">
-              <td style="border:none">
-                <div class="label" i18n:translate="">Published by</div>
-                <div>
-                  <span tal:content="reporter/fullname|reporter/username"></span>
-                  <tal:email tal:condition="reporter/email|nothing"
-                             tal:define="email reporter/email|nothing">
-                    (<a tal:content="email"
-                        tal:attributes="href string:mailto:${email}"></a>)
-                  </tal:email>
-                </div>
-              </td>
-            </tal:reporter>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </tal:render> 
 
   <!-- CUSTOM FOOTER -->
   <tal:render condition="python:footer">

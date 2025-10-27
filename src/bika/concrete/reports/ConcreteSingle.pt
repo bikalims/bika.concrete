@@ -439,7 +439,6 @@
       <div class="" tal:condition="has_ri">
         <h1 i18n:translate="">Notes</h1>
         <tal:ri repeat="ri ris">
-          <h2 tal:condition="ri/richtext|nothing" class="notes-header" tal:content="string:${ri/title}" ></h2>
           <div tal:content="structure ri/richtext|nothing"></div>
         </tal:ri>
       </div>

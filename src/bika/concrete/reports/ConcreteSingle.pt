@@ -206,17 +206,19 @@
           <td class="field">
               <div tal:content="model/getId"/>
           </td>
-          <td class="label"></td>
-          <td class="label"></td>
+          <td class="label" i18n:translate="">Report ID</td>
+           <td class="field">
+              <div name='coa_num' tal:content="python: coa_num"/>
+          </td>
         </tr>
         <tr>
           <td class="label">Project Name</td>
           <td class="field">
               <div tal:content="model/Batch/Title|nothing"/>
           </td>
-          <td class="label" i18n:translate="">Report ID</td>
-           <td class="field">
-              <div name='coa_num' tal:content="python: coa_num"/>
+          <td class="label" i18n:translate="">Date Sampled </td>
+          <td class="field">
+              <div tal:content="python:view.get_day_month_year_format(model.DateSampled or view.timestamp)"/>
           </td>
         </tr>
         <!-- Contact Name(s) -->
@@ -225,11 +227,11 @@
           <td class="field">
               <div tal:content="model/SampleDescription"/>
           </td>
-
-          <td class="label" i18n:translate="">Date Sampled </td>
+          <td class="label"  i18n:translate="">Date Received</td>
           <td class="field">
-              <div tal:content="python:view.get_day_month_year_format(model.DateSampled or view.timestamp)"/>
+              <div tal:content="python:view.get_day_month_year_format(model.DateReceived or view.timestamp)"/>
           </td>
+
         </tr>
         <!-- Email Address -->
         <tr>
@@ -237,9 +239,10 @@
           <td class="field">
               <div tal:content="model/SampleType/title|nothing"/>
           </td>
-          <td class="label"  i18n:translate="">Date Received</td>
+          <td class="label"  i18n:translate="">Date Analysed</td>
           <td class="field">
-              <div tal:content="python:view.get_day_month_year_format(model.DateReceived or view.timestamp)"/>
+              <span tal:content="python:view.get_date_analysed(model)[0] or view.timestamp"/> -
+              <span tal:content="python:view.get_date_analysed(model)[1] or view.timestamp"/>
           </td>
         </tr>
         <tr>
@@ -247,11 +250,8 @@
           <td class="field">
               <div tal:content="spec/title|nothing"/>
           </td>
-          <td class="label"  i18n:translate="">Date Analysed</td>
-          <td class="field">
-              <span tal:content="python:view.get_date_analysed(model)[0] or view.timestamp"/> -
-              <span tal:content="python:view.get_date_analysed(model)[1] or view.timestamp"/>
-          </td>
+          <td class="label" i18n:translate="">Date Published</td>
+          <td class="field" tal:content="python:view.get_day_month_year_format(model.DatePublished or view.timestamp)"></td>
         </tr>
 
         <tr>
@@ -261,17 +261,10 @@
                 <div tal:content="batch/getId"/>
               </div>
           </td>
-          <td class="label" i18n:translate="">Date Published</td>
-          <td class="field" tal:content="python:view.get_day_month_year_format(model.DatePublished or view.timestamp)"></td>
-        </tr>
-        <tr>
-          <td class=""></td>
-          <td class=""></td>
           <td class="label" i18n:translate="">Published by</td>
           <td class="field">
             <span tal:content="reporter/fullname|reporter/username"/>
           </td>
-
         </tr>
       </table>
       <div class="clearfix"></div>

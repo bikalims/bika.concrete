@@ -170,20 +170,14 @@
       <!-- Header Table -->
         <div class="col-6 text-left">
           <table class="table table-sm table-condensed noborder" style="width:fit-content !important; padding:0; margin:0">
-              <colgroup>
-                <col style="width: 40%;">
-                <col style="width: 30%;">
-                <col style="width: 25%;">
-              </colgroup>
             <!-- Client Name(s) -->
             <tr>
-              <td colspan="3"><h1 class="text-center">Physical Tests Record</h1></td>
+              <td><h1 class="text-center">Physical Tests Record</h1></td>
             </tr>
             <tr>
               <td class="label">
-                <h2 tal:content="string:Concrete ${model/SampleTypeTitle}"/></td>
-              <td class="label">Sample ID</td>
-              <td><span tal:content="model/getId"/></td>
+                <h1 i18n:translate="" style="font-size:140%" tal:content="string:Concrete ${model/SampleTypeTitle}"/>
+              </td>
             </tr>
           </table>
         </div>
@@ -207,6 +201,14 @@
         <!-- Client Info -->
       <table class="table table-sm table-condensed">
         <!-- Client Name(s) -->
+        <tr>
+          <td class="label">Sample ID</td>
+          <td class="field">
+              <div tal:content="model/getId"/>
+          </td>
+          <td class="label"></td>
+          <td class="label"></td>
+        </tr>
         <tr>
           <td class="label">Project Name</td>
           <td class="field">

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from bika.lims.api import get_request
 import logging
-from bika.concrete.interfaces import IBikaConcreteLayer
 from zope.i18nmessageid import MessageFactory
+
+from bika.lims.api import get_request
+from bika.concrete.interfaces import IBikaConcreteLayer
 
 PRODUCT_NAME = "bika.concrete"
 PROFILE_ID = "profile-{}:default".format(PRODUCT_NAME)

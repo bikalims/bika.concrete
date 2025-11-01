@@ -133,7 +133,11 @@ def setup_catalogs(portal):
 def add_mix_tab_to_batch(portal):
     pt = api.get_tool("portal_types", context=portal)
     fti = pt.get("Batch")
-    # Added location listing
+    actions = fti.listActions()
+    for idx, action in enumerate(actions):
+        if action.id == "mix":
+            fti.deleteActions([idx, ])
+
     actions = fti.listActions()
     action_ids = [a.id for a in actions]
     if "mix" not in action_ids:
@@ -145,7 +149,7 @@ def add_mix_tab_to_batch(portal):
             visible=True,
             icon_expr="string:${portal_url}/images/mix.png",
             action="string:${object_url}/mix",
-            condition="",
+            condition="python:context.MixSpreadsheet",
             link_target="",
         )
 
@@ -186,3 +190,15 @@ def add_location_to_supplier(portal):
             allowed_types.append("SupplierLocation")
             fti.allowed_content_types = tuple(allowed_types)
             logger.info("Add SupplierLocation on Supplier allowed types")
+
+
+def remove_batch_mix(portal):
+    pt = api.get_tool("portal_types", context=portal)
+    fti = pt.get("Batch")
+
+    # removed location listing
+    actions = fti.listActions()
+    for idx, action in enumerate(actions):
+        if action.id == "mix":
+            fti.deleteActions([idx, ])
+    add_mix_tab_to_batch(portal)

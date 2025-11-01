@@ -8,8 +8,9 @@
     description="Gets Mix Design"
     class="bika.lims.content.batch.Batch"
     original="get_mix_design"
+    order="1000"
     ignoreOriginal="True"
-    replacement=".batch.get_mix_design" />
+    replacement="bika.concrete.monkeys.batch.get_mix_design" />
 
   <!-- Sample -->
   <monkey:patch

@@ -9,6 +9,7 @@ from bika.concrete import logger
 from bika.concrete.setuphandlers import setup_catalogs
 from bika.concrete.setuphandlers import add_location_to_supplier
 from bika.concrete.setuphandlers import setup_id_formatting
+from bika.concrete.setuphandlers import remove_batch_mix
 
 from senaite.core.catalog import SETUP_CATALOG, SENAITE_CATALOG
 from senaite.core.upgrade import upgradestep
@@ -63,8 +64,14 @@ def add_brands(tool):
 
 def migrate_cement_to_concrete(context):
     """Upgrade step to update ZODB objects from bika.cement to bika.concrete."""
+    remove_batch_mix(context)
     catalog = api.get_tool(SENAITE_CATALOG)
+    migrate_to_concrete(catalog)
+    catalog = api.get_tool(SETUP_CATALOG)
+    migrate_to_concrete(catalog)
 
+
+def migrate_to_concrete(catalog):
     migrated = 0
     skipped = 0
     failed = 0
@@ -101,7 +108,6 @@ def migrate_cement_to_concrete(context):
                 logger.info("MIGRATED %s: %s → %s",
                             brain.getPath(), old_class_path, new_class_path)
             else:
-                import pdb; pdb.set_trace()
                 skipped += 1
                 # Optionally log skipped objects, but keep it light
                 # logger.debug("SKIPPED %s: %s.%s",

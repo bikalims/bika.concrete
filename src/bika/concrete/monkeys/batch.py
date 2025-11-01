@@ -3,11 +3,9 @@
 from bika.lims import api
 from senaite.core.catalog import SETUP_CATALOG
 
-from bika.concrete.config import check_installed
 
-
-@check_installed(None)
 def get_mix_design(self):
+    import pdb; pdb.set_trace()
     batch = self
     query = {
         "portal_type": "MixDesign",

@@ -63,7 +63,9 @@ def add_brands(tool):
 
 
 def migrate_cement_to_concrete(context):
-    """Upgrade step to update ZODB objects from bika.cement to bika.concrete."""
+    """
+    Upgrade step to update ZODB objects from bika.cement to bika.concrete.
+    """
     remove_batch_mix(context)
     catalog = api.get_tool(SENAITE_CATALOG)
     migrate_to_concrete(catalog)
@@ -89,9 +91,9 @@ def migrate_to_concrete(catalog):
 
             if module_name.startswith(OLD_PACKAGE):
                 # Attempt to import the new class
-                new_module_name = module_name.replace(OLD_PACKAGE, NEW_PACKAGE, 1)
+                newmod_name = module_name.replace(OLD_PACKAGE, NEW_PACKAGE, 1)
                 try:
-                    new_module = __import__(new_module_name, fromlist=[class_name])
+                    new_module = __import__(newmod_name, fromlist=[class_name])
                     new_class = getattr(new_module, class_name)
                 except ImportError as e:
                     failed += 1
@@ -100,7 +102,7 @@ def migrate_to_concrete(catalog):
                     continue
 
                 old_class_path = "{}.{}".format(module_name, class_name)
-                new_class_path = "{}.{}".format(new_module_name, class_name)
+                new_class_path = "{}.{}".format(newmod_name, class_name)
 
                 # Change the class of the object
                 obj.__class__ = new_class

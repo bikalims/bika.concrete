@@ -5,7 +5,6 @@ from senaite.core.catalog import SETUP_CATALOG
 
 
 def get_mix_design(self):
-    import pdb; pdb.set_trace()
     batch = self
     query = {
         "portal_type": "MixDesign",

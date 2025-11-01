@@ -31,7 +31,6 @@ class BatchMixView(BrowserView):
     def __call__(self):
         #
         batch = self.context
-        import pdb; pdb.set_trace()
         mix_design = batch.get_mix_design()
         # Mix tab only available if a mix design is created for the batch
         if not mix_design:

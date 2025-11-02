@@ -387,10 +387,27 @@
                <td class="no-border"></td>
             <tr/>
             <tr tal:repeat="ana python: col1[row]['analyses']">
-              <td class="text-ce" tal:content="ana/title"></td>
-              <td class="" tal:content="structure python:model.get_formatted_result(ana)"></td>
-              <td tal:content="structure python:model.get_formatted_unit(ana)"></td>
-              <td tal:content="structure python:model.get_formatted_specs(ana)"></td>
+              <td class="" tal:content="ana/title"></td>
+              <td class="">
+                  <span tal:content="structure python:model.get_formatted_result(ana)"/>
+                  <span  tal:condition="python:len(view.get_result_variables(ana)) > 0">
+                      <span tal:define="psivalue python:view.get_result_variables(ana)[0]['formatted_value']"
+                            tal:content="string:[${psivalue}]"/>
+                  </span>
+              </td>
+              <td>
+                <span  tal:content="structure python:model.get_formatted_unit(ana)"/>
+                <span  tal:condition="python:len(view.get_result_variables(ana)) > 0">
+                  <span tal:define="psiunit python:view.get_result_variables(ana)[0]['formatted_unit']"
+                    tal:content="string:[${psiunit}]"/>
+                </span>
+              </td>
+              <td>
+                <span tal:content="structure python:model.get_formatted_specs(ana)"/>
+                <span  tal:condition="python:len(view.get_result_variables(ana)) > 0 and model.get_formatted_specs(ana) and spec">
+                <span tal:content="python: view.get_converted_specs(ana)"></span>
+                </span>
+              </td>
             </tr>
           </tal:row>
         </table>

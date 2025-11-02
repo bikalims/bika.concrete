@@ -154,7 +154,8 @@ supplier_location_field = ExtUIDReferenceField(
         ui_item="supplier_location_title",
         colModel=[
             dict(columnName="UID", hidden=True),
-            dict(columnName="supplier_location_title", width="60", label=_("Title")),
+            dict(columnName="supplier_location_title",
+                 width="60", label=_("Title")),
         ],
     ),
 )

@@ -460,6 +460,74 @@
       </div>
     </div>
   </tal:render>
+  <tal:render condition="python:view.can_plot(model) == False">
+    <div class="row section-results no-gutters">
+      <div class="w-100">
+
+        <!-- Point of Capture -->
+        <tal:poc define="analyses_by_poc python:view.get_analyses_by_poc(model);"
+                 repeat="poc analyses_by_poc">
+
+          <!-- Analysis Category -->
+          <tal:categories_in_poc define="categories_by_poc python:view.get_categories_by_poc(model)"
+                                 repeat="category python:view.sort_items(categories_by_poc.get(poc))">
+
+            <!--  TIMESERIES RESULTS -->
+            <tal:render
+              define="analyses python:[analysis for analysis in view.get_analyses_by(model, poc=poc, category=category) if analysis.ResultOptionsType=='timeseries']"
+              condition="python:analyses">
+                <div class="section section-timeseries no-gutters">
+                  <div class="">
+                    <tal:block tal:repeat="analysis analyses">
+                      <div class="row"
+                           tal:define="columns python: analysis.TimeSeriesColumns;
+                                       columns_str python:view.json_dumps(columns);
+                                       graph_interpolation python: analysis.GraphInterpolation;
+                                       graph_title python: analysis.GraphTitle;
+                                       graph_xaxis python: analysis.GraphXAxisTitle;
+                                       graph_yaxis python: analysis.GraphYAxisTitle;
+                                       results python:view.json_loads(view.get_timeseries_result(model, analysis));
+                                       results_str python:view.json_dumps(results)">
+
+                        <div class="col-12">
+                          <h3 tal:content="analysis/Title"/>
+
+                          <table class="time-series-matrix table table-sm ">
+                            <thead>
+                              <tr>
+                                <tal:head tal:repeat="col columns">
+                                  <th tal:content="python: col['ColumnTitle']"/>
+                                </tal:head>
+                              </tr>
+                            <thead>
+                            <tbody>
+                              <tr tal:repeat="row results">
+                                <tal:cell tal:repeat="cell row">
+                                  <tal:block tal:define="OOR python: cell['val'] and cell['OOR'] and repeat.cell.index > 0">
+                                    <td tal:condition="OOR" class="time-series-data time-series-oor">
+                                      <span tal:content="python: cell['val']"/>
+                                    </td>
+                                    <td tal:condition="python: not OOR" class="time-series-data">
+                                        <span tal:content="python: cell['val']"/>
+                                    </td>
+                                  </tal:block>
+                                </tal:cell>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </tal:block>
+                  </div>
+                  <br />
+                </div>
+            </tal:render>
+          </tal:categories_in_poc>
+        </tal:poc>
+      </div>
+    </div>
+  </tal:render>
 
   <!--  RESULTS INTERPRETATION -->
   <tal:render condition="python:True">
@@ -817,7 +885,7 @@
       </div>
   <!-- -->
 
-  <tal:render condition="python:True">
+  <tal:render condition="python:view.can_plot(model)">
     <div class="row section-results no-gutters">
       <div class="w-100">
 
@@ -835,7 +903,6 @@
               condition="python:analyses">
                 <div class="section section-timeseries no-gutters">
                   <div class="">
-                    <h1 i18n:translate="">Graphs</h1>
                     <tal:block tal:repeat="analysis analyses">
                       <div class="row"
                            tal:define="columns python: analysis.TimeSeriesColumns;

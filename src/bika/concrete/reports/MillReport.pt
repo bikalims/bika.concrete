@@ -405,7 +405,7 @@
               <td>
                 <span tal:content="structure python:model.get_formatted_specs(ana)"/>
                 <span  tal:condition="python:len(view.get_result_variables(ana)) > 0 and model.get_formatted_specs(ana) and spec">
-                <span tal:content="python: view.get_converted_specs(ana)"></span>
+                    <span tal:content="python: view.get_converted_specs(ana)"/>
                 </span>
               </td>
             </tr>

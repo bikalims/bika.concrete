@@ -336,7 +336,7 @@
                                        results_str python:view.json_dumps(results)">
 
                         <div class="col-12">
-                          <h3 class="no-border category font-weight-bold text-nowrap" tal:content="analysis/getCategoryTitle|nothing"/>
+                          <h3 class="no-border category font-weight-bold text-nowrap" tal:content="analysis/title|nothing"/>
 
                           <table class="time-series-matrix table table-sm table-condensed small">
                             <thead>

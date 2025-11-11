@@ -103,6 +103,9 @@
      .report .section-footer #footer-contacts {
        margin-top: 3mm;
      }
+     .report a{
+       text-decoration: none;
+     }
       .no-borders td, .no-borders th {
         border: none !important;
      }
@@ -204,7 +207,8 @@
         <tr>
           <td class="label">Sample ID</td>
           <td class="field">
-              <div tal:content="model/getId"/>
+              <a href="" tal:attributes="href model/absolute_url"
+                 tal:content="model/getId"/>
           </td>
           <td class="label" i18n:translate="">Report ID</td>
            <td class="field">
@@ -214,7 +218,8 @@
         <tr>
           <td class="label">Project Name</td>
           <td class="field">
-              <div tal:content="model/Batch/Title|nothing"/>
+              <a href="" tal:attributes="href model/Batch/absolute_url|nothing"
+                 tal:content="model/Batch/Title|nothing"/>
           </td>
           <td class="label" i18n:translate="">Date Sampled </td>
           <td class="field">
@@ -248,7 +253,8 @@
         <tr>
           <td class="label">Specification</td>
           <td class="field">
-              <div tal:content="spec/title|nothing"/>
+              <a href="" tal:attributes="href spec/absolute_url|nothing"
+                 tal:content="spec/title|nothing"/>
           </td>
           <td class="label" i18n:translate="">Date Published</td>
           <td class="field" tal:content="python:view.get_day_month_year_format(model.DatePublished or view.timestamp)"></td>
@@ -258,7 +264,8 @@
           <td class="label">Batch ID </td>
           <td class="field">
               <div tal:condition="batch">
-                <div tal:content="batch/getId"/>
+                  <a href="" tal:attributes="href batch/absolute_url|nothing"
+                     tal:content="batch/Title|nothing"/>
               </div>
           </td>
           <td class="label" i18n:translate="">Published by</td>

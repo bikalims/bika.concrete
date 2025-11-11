@@ -57,6 +57,7 @@
      .report h1 { font-size: 140%; }
      .report h2 { font-size: 120%; }
      .report h3 { font-size: 110%; }
+     .report a{ text-decoration: none; }
      .report { font-family: TitilliumText22L-Regular; }
      .report .font-size-140 { font-size: 140%; }
      .report .font-size-120 { font-size: 120%; }
@@ -149,7 +150,8 @@
                 <tr>
                   <td class="label" i18n:translate="">Material Title</td>
                   <td class="field">
-                      <div tal:content="model/MixMaterial/title|nothing"/>
+                      <a href="" tal:attributes="href model/MixMaterial/absolute_url|nothing"
+                         tal:content="model/MixMaterial/title|nothing"/>
                   </td>
                 </tr>
                 <tr>
@@ -181,7 +183,9 @@
                 <!-- Client Name(s) -->
                 <tr>
                   <td class="label" i18n:translate="">Sample ID</td>
-                  <td class="field" tal:content="model/getId|nothing">
+                  <td class="field">
+                    <a href="" tal:attributes="href model/absolute_url"
+                       tal:content="model/getId"/>
                   </td>
                 </tr>
                 <!-- Contact Name(s) -->

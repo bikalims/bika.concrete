@@ -4,7 +4,7 @@ from zope.interface import implementer
 from bika.concrete.config import PROFILE_ID
 from bika.concrete.config import logger
 from bika.lims import api
-from senaite.core.catalog import SETUP_CATALOG
+from senaite.core.catalog import SETUP_CATALOG, SENAITE_CATALOG
 from senaite.core.setuphandlers import (
     add_dexterity_items,
     setup_other_catalogs,
@@ -65,9 +65,9 @@ def post_install(context):
     profile_id = PROFILE_ID
     context = context._getImportContext(profile_id)
     portal = context.getSite()
+    add_mix_tab_to_batch(portal)
     add_dexterity_setup_items(portal)
     setup_catalogs(portal)
-    add_mix_tab_to_batch(portal)
     setup_id_formatting(portal)
     add_location_to_supplier(portal)
 
@@ -137,6 +137,8 @@ def add_mix_tab_to_batch(portal):
     for idx, action in enumerate(actions):
         if action.id == "mix":
             fti.deleteActions([idx, ])
+    catalog = api.get_tool(SENAITE_CATALOG)
+    catalog.clearFindAndRebuild()
 
     actions = fti.listActions()
     action_ids = [a.id for a in actions]

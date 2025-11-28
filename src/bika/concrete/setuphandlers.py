@@ -190,15 +190,3 @@ def add_location_to_supplier(portal):
             allowed_types.append("SupplierLocation")
             fti.allowed_content_types = tuple(allowed_types)
             logger.info("Add SupplierLocation on Supplier allowed types")
-
-
-def remove_batch_mix(portal):
-    pt = api.get_tool("portal_types", context=portal)
-    fti = pt.get("Batch")
-
-    # removed location listing
-    actions = fti.listActions()
-    for idx, action in enumerate(actions):
-        if action.id == "mix":
-            fti.deleteActions([idx, ])
-    add_mix_tab_to_batch(portal)

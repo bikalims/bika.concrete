@@ -1,0 +1,419 @@
+<tal:report
+  i18n:domain="bika.concrete"
+  define="model python:view.model;
+          laboratory view/laboratory;
+          coa_num view/get_coa_number;
+          reporter view/current_user;
+          accredited_symbol string:★;
+          outofrange_symbol string:⚠;
+          report_options python:options.get('report_options', {});
+          attachments_per_row python:int(report_options.get('attachments_per_row', 2));
+          attachments_per_row python:attachments_per_row<1 and 1 or attachments_per_row;
+          page_width options/page_width|nothing;
+          page_height options/page_height|nothing;
+          content_width options/content_width|nothing;
+          content_height options/content_height|nothing;
+          report_images python:view.get_report_images();
+          styles python:view.get_coa_styles();
+          specification model/Specification;
+          publication_specification model/PublicationSpecification;
+          spec python:publication_specification or specification;
+      ">
+
+  <!-- Custom Report Controls -->
+  <div id="controls" class="noprint">
+    <div i18n:translate="" class="text-secondary mb-2">Custom Report Options</div>
+    <!-- Attachments per row -->
+    <div class="mb-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="attachments_per_row" i18n:translate="">
+            Attachments per Row
+          </label>
+        </div>
+        <input tal:attributes="value attachments_per_row"
+               type="number"
+               class="form-control"
+               name="attachments_per_row"
+               min="1"/>
+      </div>
+      <small class="form-text text-muted" i18n:translate="">
+        Number of attachments rendered within one row per Analysis Request
+      </small>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+   console.info("######################################################################");
+   window.options = "<tal:t replace='options'/>";
+   console.log(window.options);
+   console.info("######################################################################");
+  </script>
+
+  <tal:css>
+    <style type="text/css">
+     .noborder { border: none !important}
+     .report * { font: 9pt; }
+     .report h1 { font-size: 140%; }
+     .report h2 { font-size: 120%; }
+     .report h3 { font-size: 110%; }
+     .report a{ text-decoration: none; }
+     .report { font-family: TitilliumText22L-Regular; }
+     .report .font-size-140 { font-size: 140%; }
+     .report .font-size-120 { font-size: 120%; }
+     .report .font-size-100 { font-size: 100%; }
+     .report .colon-after:after { content: ":"; }
+     .report address { margin: 1rem 0; }
+     .report table { word-wrap:break-word;
+        width:100%;
+        table-layout:fixed;
+        margin-bottom: 2px}
+     .report .table-sm th,.table-sm td { padding: 0;}
+     .report .table td {border-top: none}
+     .report table.noborder td, .report table.noborder th { border: none; }
+     .report table.nopadding td { padding: 0; }
+     .report table td.label { padding-right: 0.3rem; font-weight: bold; }
+     .report table.range-table td { padding: 0 0.3rem 0 0; border: none; }
+     .report .section-header h1 { font-size: 175%; }
+     .report .section-header img.logo { max-height: 200px; margin-bottom: 10px }
+     .report .barcode-hri { margin-top: -0.25em; font-size: 8pt; }
+     .report .padded-col { padding:0.1rem; }
+     <tal:block condition="python:content_width and content_height">
+     <tal:block condition="python:all([content_width, content_height])"
+                   define="cw python:float(content_width);
+                           ch python:float(content_height);">
+     /* Ensure that the images stay within the borders */
+     .report .section-attachments img {
+       max-width: <tal:t replace="python:'{:.2f}mm'.format(cw / attachments_per_row)"/>;
+       max-height: <tal:t replace="python:'{:.2f}mm'.format(ch * 0.75)"/>;
+     }
+     .report .section-resultsinterpretation img {
+       max-width: <tal:t replace="python:'{:.2f}mm'.format(cw)"/>;
+       max-height: <tal:t replace="python:'{:.2f}mm'.format(ch * 0.75)"/>;
+     }
+     </tal:block>
+    </style>
+  </tal:css>
+
+  <!-- HEADER -->
+  <tal:render condition="python:True">
+    <div class="row section-header no-gutters">
+      <!-- Header Table -->
+        <div class="col-6 text-left">
+          <!-- Header Left -->
+          <h1>Material Certification Report</h1>
+          <table class="table table-sm table-condensed">
+            <tr>
+              <td class="label" i18n:translate="">
+                <h2>
+                   <strong>
+                      <span tal:content="model/MixMaterial/material_type/title|nothing"/>
+                      <tal:spec condition="spec">
+                        <span tal:content="string:(${spec/title|nothing})"/>
+                      </tal:spec>
+                   </strong>
+                </h2>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-6 text-right">
+            <!-- Header Right -->
+            <img class="logo image-fluid" style="object-fit:contain"
+                 tal:attributes="src python:view.get_toolbar_logo();style styles/logo_styles"/>
+      </div>
+    </div>
+  </tal:render>
+  <!-- /HEADER -->
+
+  <!-- INFO -->
+
+    <div class="row section-info no-gutters">
+      <div class="w-100">
+        <!-- Client Info -->
+        <table class="table table-sm table-condensed">
+          <colgroup>
+            <col style="width:49%"/>
+            <col style="width:1%"/>
+            <col style="width:50%">
+          </colgroup>
+          <tr>
+            <td style="border:none;" class="align-top pr-2">
+              <!-- Left Table -->
+              <table class="table table-sm table-condensed">
+                <tr>
+                  <td class="label" i18n:translate="">Report ID</td>
+                  <td class="field">
+                      <div name='coa_num' tal:content="python: coa_num"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label" i18n:translate="">Material Title</td>
+                  <td class="field">
+                      <a href="" tal:attributes="href model/MixMaterial/absolute_url|nothing"
+                         tal:content="model/MixMaterial/title|nothing"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label" i18n:translate="">Description</td>
+                  <td class="field">
+                      <span tal:content="model/MixMaterial/description|nothing"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label" i18n:translate="">Analyst</td>
+                  <td class="field">
+                      <span tal:content="python:view.get_analysts(model)[0]['analyst']"/>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style="border:none;" class="align-top pl-2">
+              <!-- Right Table -->
+              <table class="table table-sm table-condensed ml-1"
+                     tal:define="laboratory python:view.laboratory;">
+                <tr>
+                  <td>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style="border:none;" class="align-top pl-2">
+              <table class="table table-sm table-condensed">
+                <!-- Client Name(s) -->
+                <tr>
+                  <td class="label" i18n:translate="">Sample ID</td>
+                  <td class="field">
+                    <a href="" tal:attributes="href model/absolute_url"
+                       tal:content="model/getId"/>
+                  </td>
+                </tr>
+                <!-- Contact Name(s) -->
+                <tr>
+                  <td class="label" i18n:translate="">Date Sampled</td>
+                  <td class="field">
+                      <span tal:content="python:view.to_custom_date(model.DateSampled)"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label" i18n:translate="">Date Received</td>
+                  <td class="field">
+                      <span tal:content="python:view.to_custom_date(model.DateReceived)"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label" i18n:translate="">Date Analysed</td>
+                  <td class="field">
+                      <span tal:content="python:view.get_date_analysed(model)[0] or ''"/>
+                      -
+                      <span tal:content="python:view.get_date_analysed(model)[0] or ''"/>
+                  </td>
+                </tr>
+              </table>
+          </td>
+          </tr>
+        </table>
+      </div>
+      <!-- Clear Floats
+           https://github.com/Kozea/WeasyPrint/issues/36
+      -->
+      <div class="clearfix"></div>
+    </div>
+
+  <!-- ALERTS -->
+  <tal:render condition="python:True">
+    <div class="row section-alerts no-gutters">
+      <div class="w-100">
+          <div class="alert alert-danger" tal:condition="model/is_invalid">
+            <h2 class="alert-heading"><span tal:replace="model/getId"/></h2>
+            <div i18n:translate="">This Analysis Request has been invalidated due to erroneously published results</div>
+            <tal:invalidreport tal:define="child model/Retest"
+                               tal:condition="child">
+              <span i18n:translate="">This Analysis request has been replaced by</span>
+              <a tal:attributes="href child/absolute_url"
+                 tal:content="child/getId"></a>
+            </tal:invalidreport>
+          </div>
+
+          <div class="alert alert-info" tal:condition="model/is_provisional">
+            <h2 class="alert-heading"><span tal:replace="model/getId"/></h2>
+            <div i18n:translate="">Provisional report</div>
+          </div>
+      </div>
+    </div>
+  </tal:render>
+  <tal:render condition="python:True">
+    <div class="row section-info no-gutters">
+      <div class="w-100">
+  <table class="table table-sm table-condensed small"
+       tal:define="col1 python:view.split_categories(model)[0];
+                   col2 python:view.split_categories(model)[1];"
+       tal:condition="python:col1 or col2">
+  <thead>
+    <tr>
+      <th class="small">Analysis</th>
+      <th class="small">Result</th>
+      <th class="small">Unit</th>
+      <th class="small">Method ID</th>
+      <th class="small">Analysis</th>
+      <th class="small">Result</th>
+      <th class="small">Unit</th>
+      <th class="small">Method ID</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <!-- Left column -->
+      <td colspan="4" tal:condition="python: col1">
+        <table class="table table-sm table-condensed small">
+          <tal:row repeat="row python:range(len(col1))">
+            <tr>
+               <td class="no-border category font-weight-bold text-nowrap" tal:content="python: col1[row]['title']"></td>
+               <td class="no-border"></td>
+               <td class="no-border"></td>
+               <td class="no-border"></td>
+            <tr/>
+            <tr tal:repeat="ana python: col1[row]['analyses']">
+              <td class="text-ce" tal:content="ana/title"></td>
+              <td class="" tal:content="structure python:model.get_formatted_result(ana)"></td>
+              <td tal:content="structure python:model.get_formatted_unit(ana)"></td>
+              <td tal:content="ana/Method/MethodID|nothing"></td>
+            </tr>
+          </tal:row>
+        </table>
+      </td>
+
+      <!-- Right column -->
+      <td colspan="4" tal:condition="python: col2">
+        <table class="table table-sm table-condensed small">
+          <tal:row repeat="row python:range(len(col2))">
+            <tr>
+               <td class="no-border category font-weight-bold text-nowrap" tal:content="python: col2[row]['title']"></td>
+               <td class="no-border"></td>
+               <td class="no-border"></td>
+               <td class="no-border"></td>
+            <tr/>
+            <tr tal:repeat="ana python: col2[row]['analyses']">
+              <td class="" tal:content="ana/title"></td>
+              <td class="" tal:content="structure python:model.get_formatted_result(ana)"></td>
+              <td tal:content="structure python:model.get_formatted_unit(ana)"></td>
+              <td tal:content="ana/Method/MethodID|nothing"></td>
+            </tr>
+          </tal:row>
+        </table>
+      </td>
+
+    </tr>
+  </tbody>
+</table>
+  </div>
+  </div>
+  </tal:render>
+  <tal:render condition="python:True">
+    <div class="row section-results no-gutters">
+      <div class="w-100">
+
+        <!-- Point of Capture -->
+        <tal:poc define="analyses_by_poc python:view.get_analyses_by_poc(model);"
+                 repeat="poc analyses_by_poc">
+
+          <!-- Analysis Category -->
+          <tal:categories_in_poc define="categories_by_poc python:view.get_categories_by_poc(model)"
+                                 repeat="category python:view.sort_items(categories_by_poc.get(poc))">
+
+            <!--  TIMESERIES RESULTS -->
+            <tal:render
+              define="analyses python:[analysis for analysis in view.get_analyses_by(model, poc=poc, category=category) if analysis.ResultOptionsType=='timeseries']"
+              condition="python:analyses">
+                <div class="section section-timeseries no-gutters">
+                  <div class="table table-sm table-condensed small">
+                    <tal:block tal:repeat="analysis analyses">
+                      <div class="row"
+                           tal:define="columns python: analysis.TimeSeriesColumns;
+                                       columns_str python:view.json_dumps(columns);
+                                       graph_interpolation python: analysis.GraphInterpolation;
+                                       graph_title python: analysis.GraphTitle;
+                                       graph_xaxis python: analysis.GraphXAxisTitle;
+                                       graph_yaxis python: analysis.GraphYAxisTitle;
+                                       results python:view.json_loads(view.get_timeseries_result(model, analysis));
+                                       results_str python:view.json_dumps(results)">
+
+                        <div class="col-12">
+                          <h3 class="no-border category font-weight-bold text-nowrap" tal:content="analysis/title|nothing"/>
+
+                          <table class="time-series-matrix table table-sm table-condensed small">
+                            <thead>
+                              <tr>
+                                <tal:head tal:repeat="col columns">
+                                  <th tal:content="python: col['ColumnTitle']"/>
+                                </tal:head>
+                              </tr>
+                            <thead>
+                            <tbody>
+                              <tr tal:repeat="row results">
+                                <tal:cell tal:repeat="cell row">
+                                  <tal:block tal:define="OOR python: cell['val'] and cell['OOR'] and repeat.cell.index > 0">
+                                    <td tal:condition="OOR" class="time-series-data time-series-oor">
+                                      <span tal:content="python: cell['val']"/>
+                                    </td>
+                                    <td tal:condition="python: not OOR" class="time-series-data">
+                                        <span tal:content="python: cell['val']"/>
+                                    </td>
+                                  </tal:block>
+                                </tal:cell>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <div class="time-series-graph"
+                            tal:attributes="data-columns columns_str; data-results results_str; data-graph_interpolation graph_interpolation; data-graph_title graph_title; data-graph_xaxis graph_xaxis; data-graph_yaxis graph_yaxis">
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </tal:block>
+                  </div>
+                  <br />
+                </div>
+            </tal:render>
+          </tal:categories_in_poc>
+        </tal:poc>
+      </div>
+    </div>
+  </tal:render>
+
+  <!--  SIGNATURES -->
+  <tal:render condition="python:True">
+    <tal:responsibles define="supervisor laboratory/getSupervisor">
+      <div class="row section-signatures no-gutters">
+          <table class="table table-sm table-condensed" style="width:50%">
+            <tr>
+                <td>
+                  <div class="font-weight-bold">
+                    <span tal:content="supervisor/getSalutation|nothing"></span>
+                    <span tal:condition="supervisor/getSalutation|nothing">&nbsp;</span>
+                    <span tal:content="supervisor/getFullname|nothing"></span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <span tal:content="supervisor/JobTitle|nothing"></span>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                  <div>
+                    <img tal:condition="supervisor/getSignature|nothing"
+                         tal:attributes="src string:${supervisor/absolute_url}/Signature" style="height:100px"/>
+                  </div>
+                </td>
+                <td></td>
+            </tr>
+          </table>
+      </div>
+    </tal:responsibles>
+  </tal:render>
+</tal:report>

@@ -158,8 +158,8 @@
         <!-- Client Info -->
         <table class="table table-sm table-condensed">
           <colgroup>
-            <col style="width:50%"/>
-            <col style="width:50%">
+            <col style="width:52%"/>
+            <col style="width:48%">
           </colgroup>
           <tr>
             <td style="border:none;" class="align-top pr-2">

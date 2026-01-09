@@ -107,10 +107,10 @@
               <td class="label" i18n:translate="">
                 <h2>
                    <strong>
-                    <a href="" tal:attributes="href model/MixMaterial/material_type/absolute_url"
+                    <a href="" tal:attributes="href model/MixMaterial/material_type/absolute_url|nothing"
                       tal:content="model/MixMaterial/material_type/title|nothing"/>
                       <tal:spec condition="spec">
-                        <a href="" tal:attributes="href spec/absolute_url"
+                        <a href="" tal:attributes="href spec/absolute_url|nothing"
                            tal:content="spec/title|nothing"/>
                       </tal:spec>
                    </strong>

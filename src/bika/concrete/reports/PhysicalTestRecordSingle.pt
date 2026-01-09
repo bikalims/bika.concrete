@@ -180,7 +180,7 @@
             <tr>
               <td class="label">
                 <h1 i18n:translate="" style="font-size:140%">
-                    <a href="" tal:attributes="href model/SampleType/absolute_url"
+                    <a href="" tal:attributes="href model/SampleType/absolute_url|nothing"
                         tal:content="string:${model/SampleTypeTitle}"/>
               </td>
             </tr>

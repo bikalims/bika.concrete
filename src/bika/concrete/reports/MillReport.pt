@@ -137,9 +137,9 @@
             <tr>
               <td class="field">
                  <h2>
-                    <a href="" tal:attributes="href model/MixMaterial/manufacturer/absolute_url"
+                    <a href="" tal:attributes="href model/MixMaterial/manufacturer/absolute_url|nothing"
                        tal:content="model/MixMaterial/manufacturer/title|nothing"/>
-                    <a href="" tal:attributes="href model/MixMaterial/absolute_url"
+                    <a href="" tal:attributes="href model/MixMaterial/absolute_url|nothing"
                        tal:content="model/MixMaterial/title|nothing"/>
                  </h2>
               </td>

@@ -205,6 +205,15 @@
       <table class="table table-sm table-condensed">
         <!-- Client Name(s) -->
         <tr>
+          <td class="label" i18n:translate="">Lab ID</td>
+          <td class="field">
+              <span tal:content="model/ClientSampleID|nothing"/>
+          </td>
+          <td class="label" i18n:translate=""></td>
+           <td class="field">
+          </td>
+        </tr>
+        <tr>
           <td class="label">Sample ID</td>
           <td class="field">
               <a href="" tal:attributes="href model/absolute_url"

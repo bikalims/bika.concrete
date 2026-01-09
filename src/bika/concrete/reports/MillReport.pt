@@ -170,6 +170,12 @@
               <!-- Left Table -->
               <table class="table table-sm table-condensed">
                 <tr>
+                  <td class="label" i18n:translate="">Lab ID</td>
+                  <td class="field">
+                      <span tal:content="model/ClientSampleID|nothing"/>
+                  </td>
+                </tr>
+                <tr>
                   <td class="label" i18n:translate="">Report ID</td>
                   <td class="field">
                       <div name='coa_num' tal:content="python: coa_num"/>
@@ -210,6 +216,9 @@
             <td style="border:none;" class="align-top pl-2">
               <table class="table table-sm table-condensed">
                 <!-- Client Name(s) -->
+                <tr>
+                  <td colspan="2"><p></p></td>
+                </tr>
                 <tr>
                   <td class="label" i18n:translate="">Lot Number</td>
                   <td class="field" tal:content="model/LotNumber|nothing">

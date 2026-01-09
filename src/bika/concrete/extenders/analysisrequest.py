@@ -255,6 +255,6 @@ class AnalysisRequestSchemaModifier(object):
         if is_installed():
             schema.moveField('SampleName', after='Contact')
             schema.moveField('SampleDescription', after='SampleName')
-            schema["ClientSampleID"].widget.label = _("Lab ID")
+            schema["ClientSampleID"].widget.label = _("Lab no")
 
         return schema

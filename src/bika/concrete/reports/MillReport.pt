@@ -130,10 +130,6 @@
           <!-- Header Left -->
           <h1>Material Certification Report</h1>
           <table class="table table-sm table-condensed">
-            <colgroup>
-              <col style="width:48%"/>
-              <col style="width:52%"/>
-            </colgroup>
             <tr>
               <td class="field">
                  <h2>

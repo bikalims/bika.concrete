@@ -218,6 +218,13 @@
                   <td colspan="2"><p></p></td>
                 </tr>
                 <tr>
+                  <td class="label" i18n:translate="">Sample ID</td>
+                  <td class="field">
+                    <a href="" tal:attributes="href model/absolute_url"
+                       tal:content="model/getId"/>
+                  </td>
+                </tr>
+                <tr>
                   <td class="label" i18n:translate="">Lot Number</td>
                   <td class="field" tal:content="model/LotNumber|nothing">
                   </td>

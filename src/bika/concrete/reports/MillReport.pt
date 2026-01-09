@@ -158,8 +158,7 @@
         <!-- Client Info -->
         <table class="table table-sm table-condensed">
           <colgroup>
-            <col style="width:49%"/>
-            <col style="width:1%"/>
+            <col style="width:50%"/>
             <col style="width:50%">
           </colgroup>
           <tr>
@@ -197,16 +196,6 @@
                   <td class="field">
                       <span tal:content="model/MixMaterial/material_type/title|nothing"/>/
                       <span tal:content="model/MixMaterial/material_type/material_class/title|nothing"/>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td style="border:none;" class="align-top pl-2">
-              <!-- Right Table -->
-              <table class="table table-sm table-condensed ml-1"
-                     tal:define="laboratory python:view.laboratory;">
-                <tr>
-                  <td>
                   </td>
                 </tr>
               </table>

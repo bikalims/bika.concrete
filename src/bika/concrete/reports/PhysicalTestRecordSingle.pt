@@ -179,7 +179,7 @@
             </tr>
             <tr>
               <td class="label">
-                <h1 i18n:translate="" style="font-size:140%" tal:content="string:Concrete ${model/SampleTypeTitle}"/>
+                <h1 i18n:translate="" style="font-size:140%" tal:content="string:${model/SampleTypeTitle}"/>
               </td>
             </tr>
           </table>

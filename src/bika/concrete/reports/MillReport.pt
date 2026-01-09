@@ -135,11 +135,12 @@
               <col style="width:52%"/>
             </colgroup>
             <tr>
-              <td class="label" i18n:translate=""><h2><strong>Sample ID</strong></h2></td>
               <td class="field">
                  <h2>
-                    <a href="" tal:attributes="href model/absolute_url"
-                       tal:content="model/getId"/>
+                    <a href="" tal:attributes="href model/MixMaterial/manufacturer/absolute_url"
+                       tal:content="model/MixMaterial/manufacturer/title|nothing"/>
+                    <a href="" tal:attributes="href model/MixMaterial/absolute_url"
+                       tal:content="model/MixMaterial/title|nothing"/>
                  </h2>
               </td>
             </tr>
@@ -170,7 +171,7 @@
               <!-- Left Table -->
               <table class="table table-sm table-condensed">
                 <tr>
-                  <td class="label" i18n:translate="">Lab ID</td>
+                  <td class="label" i18n:translate="">Lab no</td>
                   <td class="field">
                       <span tal:content="model/ClientSampleID|nothing"/>
                   </td>
@@ -184,7 +185,8 @@
                 <tr>
                   <td class="label" i18n:translate="">Manufacturer</td>
                   <td class="field">
-                      <div tal:content="model/MixMaterial/manufacturer/title|nothing"/>
+                      <a href="" tal:attributes="href model/MixMaterial/manufacturer/absolute_url|nothing"
+                         tal:content="model/MixMaterial/manufacturer/title|nothing"/>
                   </td>
                 </tr>
                 <tr>

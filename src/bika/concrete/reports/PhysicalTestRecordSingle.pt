@@ -175,11 +175,13 @@
           <table class="table table-sm table-condensed noborder" style="width:fit-content !important; padding:0; margin:0">
             <!-- Client Name(s) -->
             <tr>
-              <td><h1 class="text-center">Physical Tests Record</h1></td>
+              <td><h1>Physical Tests Record</h1></td>
             </tr>
             <tr>
               <td class="label">
-                <h1 i18n:translate="" style="font-size:140%" tal:content="string:${model/SampleTypeTitle}"/>
+                <h1 i18n:translate="" style="font-size:140%">
+                    <a href="" tal:attributes="href model/SampleType/absolute_url"
+                        tal:content="string:${model/SampleTypeTitle}"/>
               </td>
             </tr>
           </table>
@@ -205,7 +207,7 @@
       <table class="table table-sm table-condensed">
         <!-- Client Name(s) -->
         <tr>
-          <td class="label" i18n:translate="">Lab ID</td>
+          <td class="label" i18n:translate="">Lab no</td>
           <td class="field">
               <span tal:content="model/ClientSampleID|nothing"/>
           </td>

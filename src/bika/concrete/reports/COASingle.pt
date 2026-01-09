@@ -107,9 +107,11 @@
               <td class="label" i18n:translate="">
                 <h2>
                    <strong>
-                      <span tal:content="model/MixMaterial/material_type/title|nothing"/>
+                    <a href="" tal:attributes="href model/MixMaterial/material_type/absolute_url"
+                      tal:content="model/MixMaterial/material_type/title|nothing"/>
                       <tal:spec condition="spec">
-                        <span tal:content="string:(${spec/title|nothing})"/>
+                        <a href="" tal:attributes="href spec/absolute_url"
+                           tal:content="spec/title|nothing"/>
                       </tal:spec>
                    </strong>
                 </h2>
@@ -142,7 +144,7 @@
               <!-- Left Table -->
               <table class="table table-sm table-condensed">
                 <tr>
-                  <td class="label" i18n:translate="">Lab ID</td>
+                  <td class="label" i18n:translate="">Lab no</td>
                   <td class="field">
                       <span tal:content="model/ClientSampleID|nothing"/>
                   </td>

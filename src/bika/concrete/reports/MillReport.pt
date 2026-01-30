@@ -232,15 +232,15 @@
                   <td class="field" tal:content="python:view.to_custom_date(model.DatePublished or view.timestamp)"></td>
                 </tr>
               </table>
-          </td>
+            </td>
           </tr>
           <tr>
-              <td colspan="3" class="text-center">
+              <td colspan="2" class="text-center">
                 <div class="text-center" style="background-color:red; color: white ">Certification</div>
              </td>
           </tr>
           <tr>
-            <td colspan="3" class="text-center">
+            <td colspan="2" class="text-center">
                 We certify this sample was tested in accordance with
                 <span tal:content="spec/title|nothing"/> specifications
                 for <span tal:content="model/MixMaterial/material_type/title|nothing"/>
@@ -248,7 +248,7 @@
             </td>
           </tr>
           <tr>
-             <td colspan="3" class="text-center">
+             <td colspan="2" class="text-center">
                 <div class="text-center" style="background-color:red; color: white;margin-top: 2px">General Information</div>
              </td>
           </tr>
@@ -281,16 +281,6 @@
                   <td class="label" i18n:translate="">Contact</td>
                   <td class="field">
                       <div tal:content="model/SupplierContact/Fullname|nothing"/>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td style="border:none;" class="align-top pl-2">
-              <!-- Right Table -->
-              <table class="table table-sm table-condensed ml-1"
-                     tal:define="laboratory python:view.laboratory;">
-                <tr>
-                  <td>
                   </td>
                 </tr>
               </table>

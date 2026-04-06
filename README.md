@@ -1,11 +1,11 @@
-## bika.concrete
+### bika.concrete
 
 bika.concrete Is a Senaite add-on for concrete and concrete research and QC labs
 
-### Features
+#### Features
 
 
-### Installation
+#### Installation
 
 Install bika.concrete by adding it to your buildout::
     [buildout]
@@ -14,6 +14,6 @@ Install bika.concrete by adding it to your buildout::
         bika.concrete
 and then running ``bin/buildout``
 
-### License
+#### License
 
 The project is licensed under the GPLv2.

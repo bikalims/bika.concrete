@@ -45,7 +45,7 @@ It helps labs manage:
 
 Add the following to your `buildout.cfg`:
 
-```cfg
+cfg
 [buildout]
 eggs =
     ...
@@ -66,9 +66,9 @@ Add bika.concrete to your custom add-ons list in the Docker-based Ingwe Bika dis
 This project is licensed under the GNU General Public License v2.0 (GPL-2.0).
 
 Support & Professional Services
-Bika Lab Systems offers professional implementation, training, custom development, and support for bika.concrete.
+[Bika Lab Systems](www.bikalabs.com) offers professional implementation, training, custom development, and support for bika.concrete.
 
-Website: https://www.bikalims.org
+Website: [https://www.bikalims.org](https://www.bikalims.org)
 Email: info@bikalims.org (or contact Lemoene directly)
 
 Made with ❤️ in Cape Town, South Africa

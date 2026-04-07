@@ -28,8 +28,6 @@ It helps labs manage:
 ### Requirements
 
 - **Senaite** (recommended latest version) or **Ingwe Bika LIMS 4**
-- Plone 5 / Python 3 environment
-- Bika Lab Systems professional support (optional but recommended for production use)
 
 ### Installation
 

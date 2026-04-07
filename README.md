@@ -4,8 +4,6 @@
 
 An add-on for professional open-source Laboratory Information Management Systems, specifically designed for **concrete manufacturing**, **ready-mix plants**, **cement laboratories**, and **concrete research institutions**.
 
----
-
 ### Overview
 
 `bika.concrete` extends **Senaite** (the modern core of Bika LIMS) with industry-specific functionality for the concrete and construction materials testing sector.
@@ -18,8 +16,6 @@ It helps labs manage:
 - Quality control
 - Certificates of Analysis (COA) for concrete batches
 
----
-
 ### Features
 
 - Dedicated **Concrete Mix** and **Batch** management
@@ -29,15 +25,11 @@ It helps labs manage:
 - Automated calculations and trend analysis
 - Full audit trail and ISO-compliant workflows
 
----
-
 ### Requirements
 
 - **Senaite** (recommended latest version) or **Ingwe Bika LIMS 4**
 - Plone 5 / Python 3 environment
 - Bika Lab Systems professional support (optional but recommended for production use)
-
----
 
 ### Installation
 

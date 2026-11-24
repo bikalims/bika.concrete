@@ -105,7 +105,7 @@ def setup_id_formatting(portal, format_definition=None):
         logger.info("Setting up ID formatting [DONE]")
         return
 
-    bs = portal.bika_setup
+    setup = portal.setup
     p_type = format_definition.get("portal_type", None)
     if not p_type:
         return
@@ -117,12 +117,12 @@ def setup_id_formatting(portal, format_definition=None):
 
     logger.info("Applying format '{}' for {}".format(form, p_type))
     ids = list()
-    for record in bs.getIDFormatting():
+    for record in setup.getIDFormatting():
         if record.get("portal_type", "") == p_type:
             continue
         ids.append(record)
     ids.append(format_definition)
-    bs.setIDFormatting(ids)
+    setup.setIDFormatting(ids)
 
 
 def setup_catalogs(portal):
